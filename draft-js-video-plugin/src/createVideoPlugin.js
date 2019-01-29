@@ -1,8 +1,8 @@
-import decorateComponentWithProps from 'decorate-component-with-props';
-import addVideo from './video/modifiers/addVideo';
-import DefaultVideoComponent from './video/components/DefaultVideoComponent';
-import * as types from './video/constants';
-import videoStyles from './videoStyles.css';
+import decorateComponentWithProps from "decorate-component-with-props";
+import addVideo from "./video/modifiers/addVideo";
+import DefaultVideoComponent from "./video/components/DefaultVideoComponent";
+import * as types from "./video/constants";
+import videoStyles from "./videoStyles.css";
 
 const defaultTheme = videoStyles;
 
@@ -18,24 +18,27 @@ const videoPlugin = (config = {}) => {
       if (block.getType() === types.ATOMIC) {
         // TODO subject to change for draft-js next release
         const contentState = getEditorState().getCurrentContent();
-        const entity = contentState.getEntity(block.getEntityAt(0));
-        const type = entity.getType();
-        const { src } = entity.getData();
-        if (type === types.VIDEOTYPE) {
-          return {
-            component: ThemedVideo,
-            editable: false,
-            props: {
-              src,
-            },
-          };
+        const blockEntity = block.getEntityAt(0);
+        if (blockEntity != null) {
+          const entity = contentState.getEntity(blockEntity);
+          const type = entity.getType();
+          const { src } = entity.getData();
+          if (type === types.VIDEOTYPE) {
+            return {
+              component: ThemedVideo,
+              editable: false,
+              props: {
+                src
+              }
+            };
+          }
         }
       }
 
       return null;
     },
     addVideo,
-    types,
+    types
   };
 };
 
