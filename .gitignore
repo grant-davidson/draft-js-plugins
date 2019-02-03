@@ -13,7 +13,6 @@ bundle.js
 .bundle.js
 
 # build
-/lib/
 
 # NPM debug
 npm-debug.log
